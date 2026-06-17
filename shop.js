@@ -22,6 +22,19 @@ function addToBasket(product) {
   localStorage.setItem("basket", JSON.stringify(basket));
 }
 
+function addSmoothy() {
+  // Add banana, apple, lemon to the basket (order: banana, apple, lemon)
+  addToBasket("banana");
+  addToBasket("apple");
+  addToBasket("lemon");
+  // Update the indicator everywhere
+  renderBasketIndicator();
+  // If we're on the basket page, re-render the full basket list as well
+  if (document.getElementById("basketList")) {
+    renderBasket();
+  }
+}
+
 function clearBasket() {
   localStorage.removeItem("basket");
 }
