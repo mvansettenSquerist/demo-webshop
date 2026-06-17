@@ -16,17 +16,44 @@ function getBasket() {
   }
 }
 
-function addToBasket(product) {
+function addToBasket(product, suppressSuggestion = false) {
   const basket = getBasket();
   basket.push(product);
   localStorage.setItem("basket", JSON.stringify(basket));
+
+  // Suggest complementary product unless suppressed
+  if (!suppressSuggestion) {
+    let suggestion = null;
+    if (product === "apple" || product === "banana") {
+      suggestion = "lemon";
+    } else if (product === "lemon") {
+      suggestion = "banana";
+    }
+
+    if (suggestion) {
+      const suggestionName = PRODUCTS[suggestion]
+        ? PRODUCTS[suggestion].name
+        : suggestion;
+      const confirmed = window.confirm(
+        `Would you like to also purchase a ${suggestionName}?`
+      );
+      if (confirmed) {
+        // Go to suggestion product page
+        window.location.href = `product-${suggestion}.html`;
+      } else {
+        // Return to homepage
+        window.location.href = `index.html`;
+      }
+    }
+  }
 }
 
 function addSmoothy() {
   // Add banana, apple, lemon to the basket (order: banana, apple, lemon)
-  addToBasket("banana");
-  addToBasket("apple");
-  addToBasket("lemon");
+  // suppress suggestions when adding multiple items
+  addToBasket("banana", true);
+  addToBasket("apple", true);
+  addToBasket("lemon", true);
   // Update the indicator everywhere
   renderBasketIndicator();
   // If we're on the basket page, re-render the full basket list as well
@@ -88,8 +115,8 @@ if (document.readyState !== "loading") {
 
 // Patch basket functions to update indicator
 const origAddToBasket = window.addToBasket;
-window.addToBasket = function (product) {
-  origAddToBasket(product);
+window.addToBasket = function (product, suppressSuggestion) {
+  origAddToBasket(product, suppressSuggestion);
   renderBasketIndicator();
 };
 const origClearBasket = window.clearBasket;
