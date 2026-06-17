@@ -45,6 +45,7 @@
           <button id="clearBasket" aria-label="Clear all items from basket">
             Clear Basket
           </button>
+          <button id="addSmoothy" aria-label="Add Smoothy to basket">Add Smoothy</button>
           <a
             href="checkout.html"
             id="checkoutLink"
@@ -71,6 +72,13 @@
         clearBasket();
         renderBasket();
       };
+      const smoothyBtn = document.getElementById("addSmoothy");
+      if (smoothyBtn) {
+        smoothyBtn.onclick = function () {
+          addSmoothy();
+          renderBasket();
+        };
+      }
     </script>
   </body>
 </html>

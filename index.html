@@ -64,6 +64,9 @@
           <a href="product-lemon.html">Go to Lemon</a>
         </li>
       </ul>
+      <div class="content-box">
+        <button id="addSmoothy" class="cart-action-btn" aria-label="Add Smoothy to basket">Add Smoothy (banana + apple + lemon)</button>
+      </div>
     </main>
     <footer>
       <a
@@ -75,5 +78,13 @@
       </a>
     </footer>
     <script src="shop.js"></script>
+    <script>
+      const smoothyBtn = document.getElementById("addSmoothy");
+      if (smoothyBtn) {
+        smoothyBtn.onclick = function () {
+          addSmoothy();
+        };
+      }
+    </script>
   </body>
 </html>
